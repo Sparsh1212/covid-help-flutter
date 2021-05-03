@@ -12,7 +12,12 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   AppBloc _appBloc = AppBloc();
-  final List<Widget> _children = [Home(), Request(), ShareALead(), PlasmaDonate()];
+  final List<Widget> _children = [
+    Home(),
+    Request(),
+    ShareALead(),
+    PlasmaDonate()
+  ];
 
   @override
   void initState() {
@@ -23,49 +28,57 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
-      initialData: 0,
-      stream: _appBloc.indexStream,
-      builder: (context, snapshot) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text('R-health'),
-            centerTitle: true,
-            actions: [
-              GestureDetector(
-                onTap: _appBloc.openProfile,
-                child: Icon(Icons.person_rounded))
-            ],
-          ),
-          body:  IndexedStack(
-            index: snapshot.data,
-            children: _children,
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
+        initialData: 0,
+        stream: _appBloc.indexStream,
+        builder: (context, snapshot) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
               backgroundColor: Colors.white,
-              onTap: _appBloc.onTabTapped,
-              currentIndex: snapshot.data, // new// new
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.black,
+              toolbarHeight: 50.0,
+              title: Text(
+                'R-health',
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              centerTitle: true,
+              actions: [
+                GestureDetector(
+                    onTap: _appBloc.openProfile,
+                    child: Icon(Icons.person_rounded,
+                        color: Colors.black, size: 30.0)),
+              ],
+            ),
+            body: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+              child: IndexedStack(
+                index: snapshot.data,
+                children: _children,
+              ),
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Colors.black,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.white,
+                onTap: _appBloc.onTabTapped,
+                currentIndex: snapshot.data, // new// new
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.home),
+                    label: 'Home',
                   ),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.request_quote, color: Colors.black),
-                  label: 'Request',
-                ),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.share_outlined, color: Colors.black),
-                    label: 'Share a lead'),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.donut_large, color: Colors.black),
-                    label: 'Donate'),
-              ]),
-        );
-      }
-    );
+                  BottomNavigationBarItem(
+                    icon: Icon(Icons.post_add_outlined),
+                    label: 'Request',
+                  ),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.share_outlined), label: 'Share a lead'),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.control_point_outlined)
+                      ,label: 'Donate'),
+                ]),
+          );
+        });
   }
 }

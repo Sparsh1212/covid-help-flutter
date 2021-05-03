@@ -8,18 +8,61 @@ class InfoBulletin extends StatefulWidget {
 class _InfoBulletinState extends State<InfoBulletin> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text('Information Bulletin', style: TextStyle(fontWeight: FontWeight.bold),),
-          SizedBox(),
-          Text('Random heading 1'),
-          SizedBox(),
-          Text('Random heading 1')
-        ],
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Information Bulletin',
+              style: TextStyle(color: Colors.blue[700], fontSize: 20.0),
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Covid CT values',
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                  Text('Lorem Ipsum is simply dummy text of the'),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Covid CT values',
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                  Text('Lorem Ipsum is simply dummy text of the'),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Covid CT values',
+                    style: TextStyle(fontSize: 15.0),
+                  ),
+                  Text('Lorem Ipsum is simply dummy text of the'),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/request_bloc.dart';
+import 'package:rhealth/styles/form_field_styles.dart';
 
 class Request extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class Request extends StatefulWidget {
 
 class _RequestState extends State<Request> {
   RequestBloc _requestBloc = RequestBloc();
+
 
   @override
   void initState() {
@@ -20,63 +22,91 @@ class _RequestState extends State<Request> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Request emergency help',
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Colors.white,
-      ),
       body: FormBuilder(
         key: _requestBloc.formKey,
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FormBuilderTextField(
-                decoration: InputDecoration(hintText: 'Patient Name'),
-                name: 'patient_name',
-                validator: FormBuilderValidators.required(context),
+              SizedBox(height: 15.0),
+              Text(
+                'Request emergency help',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               ),
-              FormBuilderTextField(
-                  decoration:
-                      InputDecoration(hintText: 'Patient Aadhar Card Number'),
-                  name: 'patient_aadhar_card',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(hintText: 'Age'),
-                  name: 'age',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  decoration: InputDecoration(hintText: 'Patient CT value'),
-                  name: 'patient_ct_value',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  decoration: InputDecoration(hintText: 'Patient SPO2 level'),
-                  name: 'patient_spo2_level',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  decoration: InputDecoration(hintText: 'Location'),
-                  name: 'location',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  decoration: InputDecoration(hintText: 'Address/Hospital'),
-                  name: 'address_hospital',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(hintText: 'Contact Number'),
-                  name: 'contact_number',
-                  validator: FormBuilderValidators.required(context)),
-              FormBuilderTextField(
-                  decoration:
-                      InputDecoration(hintText: 'Any other means of contact'),
-                  name: 'other_means_of_contact'),
-              TextButton(onPressed: _requestBloc.submit, child: Text('Submit'))
+              SizedBox(height: 10.0),
+             TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.red),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                onPressed: _requestBloc.selectRequirements,
+                child: Text('Add Requirements'),
+              ),
+              SizedBox(height: 10.0,),
+              StreamBuilder<List<bool>>(
+                  initialData: _requestBloc.metaTags,
+                  stream: _requestBloc.metaTagStream,
+                  builder: (context, snapshot) {
+                    return Column(
+                      children: snapshot.data
+                          .asMap()
+                          .entries
+                          .map((entry) => entry.value
+                              ? _requestBloc.getAllRequirements(context)[entry.key]
+                              : Container())
+                          .toList(),
+                    );
+                  }),
+              themeFormTextField(
+                  'patient_name', 'Patient Name', context, false),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: themeFormTextField('patient_aadhar_card',
+                        'Patient Aadhar Card Number', context, false),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                      flex: 2,
+                      child: themeFormTextField('age', 'Age', context, true))
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: themeFormTextField(
+                        'patient_ct_value', 'Patient CT value', context, false),
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Expanded(
+                      child: themeFormTextField('patient_spo2_level',
+                          'Patient SPO2 level', context, true))
+                ],
+              ),
+              themeFormTextField('location', 'Location', context, false),
+              themeFormTextField(
+                  'address_hospital', 'Address/Hospital', context, false),
+              themeFormTextField(
+                  'contact_number', 'Contact Number', context, true),
+              themeFormTextField('other_means_of_contact',
+                  'Any other means of contact', context, false),
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                onPressed: _requestBloc.submit,
+                child: Text('Submit'),
+              ),
             ],
           ),
         ),

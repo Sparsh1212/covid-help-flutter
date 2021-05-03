@@ -21,33 +21,56 @@ class _SearchState extends State<Search> {
     return Container(
       child: FormBuilder(
         key: _searchBloc.formKey,
-        child: Column(
+        child: Row(
           children: [
-            FormBuilderTextField(
-                name: 'search_query',
-                decoration: InputDecoration(
-                    hintText: 'Search', suffixIcon: Icon(Icons.search)),
-                onSubmitted: (String query) => _searchBloc.submitSearch(),
-                validator: FormBuilderValidators.required(context),
-                keyboardType: TextInputType.number,),
-            FormBuilderDropdown(
-              name: 'filter',
-              initialValue: 'Injection',
-              hint: Text('Select filter'),
-              items: [
-                DropdownMenuItem(
-                  value: 'Injection',
-                  child: Text('Injection'),
-                ),
-                DropdownMenuItem(
-                  value: 'Oxygen',
-                  child: Text('Oxygen'),
-                ),
-                DropdownMenuItem(
-                  value: 'Plasma',
-                  child: Text('Plasma'),
+            Expanded(
+              flex: 9,
+              child: SizedBox(
+                height: 25.0,
+                child: FormBuilderTextField(
+                    name: 'search_query',
+                    decoration: InputDecoration(
+                  isCollapsed: true,
+                        hintText: 'Enter your pin code', prefixIcon: Icon(Icons.search)),
+                    onSubmitted: (String query) => _searchBloc.submitSearch(),
+                    validator: FormBuilderValidators.required(context),
+                    keyboardType: TextInputType.number,),
+              ),
+            ),
+            SizedBox(width: 10.0,),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                  borderRadius: BorderRadius.circular(
+                  5.0,
                 )
-              ],
+              ),
+                    
+                    child: Icon(Icons.filter_list,size: 25.0, color: Colors.white,)),
+                    SizedBox(width: 5.0,),
+            Expanded(
+              flex: 5,
+              child: FormBuilderDropdown(
+                name: 'filter',
+                initialValue: 'Injection',
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: 'Injection',
+                    child: Text('Injection'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Oxygen',
+                    child: Text('Oxygen'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'Plasma',
+                    child: Text('Plasma'),
+                  )
+                ],
+              ),
             )
           ],
         ),
