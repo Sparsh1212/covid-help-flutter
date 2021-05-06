@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'package:rhealth/models/info_bulletin.dart';
 import 'package:rhealth/models/lead_model.dart';
+import 'package:rhealth/models/request_model.dart';
+import 'package:rhealth/models/search_results_model.dart';
 import 'package:rhealth/models/token_model.dart';
 import 'package:rhealth/models/user_model.dart';
 import 'package:rhealth/services/auth_service.dart';
@@ -32,7 +35,6 @@ class CovidApiService {
     final http.Response response = await http.get(
         BASE_URL + COVID_API_BASE + EP_USER_LOCAL_DATA,
         headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
-
     if (response.statusCode == 200)
       return UserLocalData.fromJSON(jsonDecode(response.body));
     else
@@ -42,7 +44,6 @@ class CovidApiService {
   Future<UserFullData> fetchUserFullData() async {
     UserAcademicData userAcademicData = await fetchUserAcademicData();
     UserLocalData userLocalData = await fetchUserLocalData();
-
     return UserFullData.fromJSON(userAcademicData, userLocalData);
   }
 
@@ -55,11 +56,10 @@ class CovidApiService {
 
     if (response.statusCode == 200) {
       Iterable list = jsonDecode(response.body);
-      return list.map((leadObj) => Lead.fromJSON(leadObj)).toList();
+      return list.map<Lead>((leadObj) => Lead.fromJSON(leadObj)).toList();
     } else
       throw Exception('Error fetching user leads');
   }
-
 
   Future<List<Lead>> fetchUserPlasmaDonations() async {
     String accessToken = await getAcessToken();
@@ -70,8 +70,49 @@ class CovidApiService {
 
     if (response.statusCode == 200) {
       Iterable list = jsonDecode(response.body);
-      return list.map((leadObj) => Lead.fromJSON(leadObj)).toList();
+      return list.map<Lead>((leadObj) => Lead.fromJSON(leadObj)).toList();
     } else
       throw Exception('Error fetching user plasma donations');
   }
+
+  Future<List<Request>> fetchUserRequests() async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http.get(
+        BASE_URL + COVID_API_BASE + EP_USER_REQUESTS,
+        headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
+
+    if (response.statusCode == 200) {
+      Iterable list = jsonDecode(response.body);
+      return list.map<Request>((requestObj) => Request.fromJSON(requestObj)).toList();
+    } else
+      throw Exception('Error fetching user leads');
+  }
+
+  Future<SearchResults> fetchSearchResults(String searchQuery) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http.get(
+        BASE_URL + COVID_API_BASE + EP_SEARCH + searchQuery,
+        headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
+
+    if (response.statusCode == 200) {
+      return SearchResults.fromJSON(jsonDecode(response.body));
+    } else
+      throw Exception('Error fetching search results');
+  }
+
+    Future<List<Bulletin>> fetchInfoBulletins() async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http.get(
+        BASE_URL + COVID_API_BASE + EP_INFO_BULLETINS,
+        headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
+
+    if (response.statusCode == 200) {
+      Iterable list = jsonDecode(response.body);
+      return list.map<Bulletin>((bulletinObj) => Bulletin.fromJSON(bulletinObj)).toList();
+    } else
+      throw Exception('Error fetching info bulletins');
+  }  
 }

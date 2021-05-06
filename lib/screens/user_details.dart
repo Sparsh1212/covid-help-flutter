@@ -39,14 +39,14 @@ class UserDetails extends StatelessWidget {
                     height: 20.0,
                   ),
                   Text(
-                    'Contact Number: '+user.contactNumber,
+                    'Contact Number: ' + user.contactNumber,
                     style: TextStyle(fontSize: 18.0),
                   ),
                   SizedBox(
                     height: 15.0,
                   ),
                   Text(
-                    'Address: '+user.address,
+                    'Address: ' + user.address,
                     style: TextStyle(fontSize: 18.0),
                   ),
                   SizedBox(
@@ -59,6 +59,7 @@ class UserDetails extends StatelessWidget {
                 ],
               );
             }
+
             return ShimmerProfileCard();
           }),
     );

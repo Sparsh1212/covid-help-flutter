@@ -24,50 +24,74 @@ class _SearchState extends State<Search> {
         child: Row(
           children: [
             Expanded(
-              flex: 9,
+              flex: 7,
               child: SizedBox(
                 height: 25.0,
                 child: FormBuilderTextField(
-                    name: 'search_query',
-                    decoration: InputDecoration(
-                  isCollapsed: true,
-                        hintText: 'Enter your pin code', prefixIcon: Icon(Icons.search)),
-                    onSubmitted: (String query) => _searchBloc.submitSearch(),
-                    validator: FormBuilderValidators.required(context),
-                    keyboardType: TextInputType.number,),
+                  name: 'search_query',
+                  decoration: InputDecoration(
+                      isCollapsed: true,
+                      hintText: 'Enter your pin code',
+                      prefixIcon: Icon(Icons.search)),
+                  onSubmitted: (String query) => _searchBloc.submitSearch(),
+                  validator: FormBuilderValidators.required(context),
+                  keyboardType: TextInputType.number,
+                ),
               ),
             ),
-            SizedBox(width: 10.0,),
+            SizedBox(
+              width: 10.0,
+            ),
             Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                  borderRadius: BorderRadius.circular(
-                  5.0,
-                )
-              ),
-                    
-                    child: Icon(Icons.filter_list,size: 25.0, color: Colors.white,)),
-                    SizedBox(width: 5.0,),
+                decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(
+                      5.0,
+                    )),
+                child: Icon(
+                  Icons.filter_list,
+                  size: 25.0,
+                  color: Colors.white,
+                )),
+            SizedBox(
+              width: 5.0,
+            ),
             Expanded(
               flex: 5,
               child: FormBuilderDropdown(
                 name: 'filter',
-                initialValue: 'Injection',
+                initialValue: 'oxygen',
                 decoration: InputDecoration(
                   border: InputBorder.none,
                 ),
                 items: [
                   DropdownMenuItem(
-                    value: 'Injection',
-                    child: Text('Injection'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Oxygen',
+                    value: 'oxygen',
                     child: Text('Oxygen'),
                   ),
                   DropdownMenuItem(
-                    value: 'Plasma',
+                    value: 'plasma',
                     child: Text('Plasma'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'remdesivir_tocilizumab',
+                    child: Text('Remdesivir & Tocilizumab'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'fabiflu_favipiravir',
+                    child: Text('Fabiflu & Favipiravir'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'hospital_beds',
+                    child: Text('Hospital beds'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'icu_and_ventilator',
+                    child: Text('ICU & Ventilator'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'other',
+                    child: Text('Other'),
                   )
                 ],
               ),

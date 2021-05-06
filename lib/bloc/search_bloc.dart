@@ -9,9 +9,14 @@ class SearchBloc {
   void submitSearch() {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
-      //print(formKey.currentState.value);
       Navigator.push(
-          context, MaterialPageRoute(builder: (BuildContext context) => SearchResults()));
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => SearchResults(
+                    searchQuery:
+                        formKey.currentState.fields['search_query'].value,
+                    searchFilter: formKey.currentState.fields['filter'].value,
+                  )));
     }
   }
 }

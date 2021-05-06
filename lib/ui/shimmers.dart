@@ -6,7 +6,7 @@ class ShimmerSingleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -72,7 +72,6 @@ class ShimmerInfoBulletinsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12.0),
       child: Column(
         children: [
           ShimmerSingleInfoBulletin(),
@@ -91,7 +90,7 @@ class ShimmerSingleInfoBulletin extends StatelessWidget {
       baseColor: Colors.grey[300],
       highlightColor: Colors.grey[200],
       child: Container(
-        margin: EdgeInsets.only(bottom: 25.0),
+        margin: EdgeInsets.only(bottom: 40.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -105,9 +104,15 @@ class ShimmerSingleInfoBulletin extends StatelessWidget {
                 ),
                 Container(
                   width: 300.0,
-                  height: 15.0,
+                  height: 50.0,
                   color: Colors.white,
                 ),
+                SizedBox(height: 10.0,),
+                Container(
+                  height: 10.0,
+                  width: 200.0,
+                  color: Colors.white,
+                )
           ],
         ),
       ),

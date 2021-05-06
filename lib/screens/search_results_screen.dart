@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:rhealth/ui/lead_card.dart';
-import 'package:rhealth/ui/request_card.dart';
+import 'package:rhealth/bloc/search_results_bloc.dart';
+import 'package:rhealth/screens/lead_tab_bar.dart';
+import 'package:rhealth/screens/requests_tab_bar.dart';
 
 class SearchResults extends StatefulWidget {
+  final String searchQuery;
+  final String searchFilter;
+
+  SearchResults({@required this.searchQuery, this.searchFilter});
+
   @override
   _SearchResultsState createState() => _SearchResultsState();
 }
@@ -11,10 +17,13 @@ class SearchResults extends StatefulWidget {
 class _SearchResultsState extends State<SearchResults>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  final SearchResultsBloc _searchResultsBloc = SearchResultsBloc();
 
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    _searchResultsBloc.getSearchResults(
+        widget.searchQuery, widget.searchFilter);
     super.initState();
   }
 
@@ -46,7 +55,7 @@ class _SearchResultsState extends State<SearchResults>
                   width: 10.0,
                 ),
                 Text(
-                  'Gurgaon',
+                  widget.searchQuery,
                   style: TextStyle(fontSize: 18.0),
                 )
               ],
@@ -119,22 +128,8 @@ class _SearchResultsState extends State<SearchResults>
                 child: TabBarView(
               controller: _tabController,
               children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      //LeadCard(),
-                    ],
-                  ),
-                ),
-
-                // second tab bar view widget
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      RequestCard(),
-                    ],
-                  ),
-                ),
+                LeadTabBar(leadsStream: _searchResultsBloc.leadsStream),
+                RequestTabBar(requestsStream: _searchResultsBloc.requestsStream)
               ],
             ))
           ],

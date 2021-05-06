@@ -30,7 +30,7 @@ class UserLocalData {
     return UserLocalData(
         contactNumber: json['contactInformation']['phone'],
         address: json['locationInformation']['address'],
-        pincode: json['locationInformation']['postalCode']);
+        pincode: json['locationInformation']['postalCode'].toString());
   }
 }
 

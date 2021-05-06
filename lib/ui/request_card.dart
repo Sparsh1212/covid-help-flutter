@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/ui/tag_container.dart';
 
 class RequestCard extends StatelessWidget {
+  final Request request;
+  RequestCard({@required this.request});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +21,7 @@ class RequestCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    'Remdisivir',
+                    request.title,
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
@@ -44,34 +48,56 @@ class RequestCard extends StatelessWidget {
               Text('Specification mentioned',
                   style: TextStyle(fontSize: 15.0, color: Colors.grey[800])),
               SizedBox(
-                height: 20.0,
+                height: 15.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: request.resourcesRequired
+                    .map((resourceObj) => Container(
+                          margin: EdgeInsets.only(bottom: 5.0),
+                          child: Text(resourceObj.resourceType +
+                              ': ' +
+                              resourceObj.resourceValue),
+                        ))
+                    .toList(),
+              ),
+              SizedBox(
+                height: 10.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('For: Patient Name', style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.grey[800]),), Text('Age: 57', style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.grey[800]))],
+                children: [
+                  Text(
+                    'For: ' + request.patientName,
+                    style: TextStyle(fontSize: 15.0, color: Colors.grey[800]),
+                  ),
+                  Text('Age: ' + request.patientAge,
+                      style: TextStyle(fontSize: 15.0, color: Colors.grey[800]))
+                ],
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text('RT value: 445', style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.grey[800])), Text('SPO2 value: 90', style: TextStyle(
-                  fontSize: 15.0,
-                  color: Colors.grey[800]))],
+                children: [
+                  Text('CT value: ' + request.patientCtValue,
+                      style:
+                          TextStyle(fontSize: 15.0, color: Colors.grey[800])),
+                  Text('SPO2 value: ' + request.patientSpo2Value,
+                      style: TextStyle(fontSize: 15.0, color: Colors.grey[800]))
+                ],
               ),
               SizedBox(
                 height: 20.0,
               ),
-              Text('1234, Sector-67, Gurugram, Haryana 122001',
+              Text(request.address,
                   style: TextStyle(fontSize: 15.0, color: Colors.grey[700])),
               SizedBox(
                 height: 10.0,
               ),
-              Text('Contact Details', style: TextStyle(fontSize: 15.0)),
+              Text('Contact: ' + request.contact,
+                  style: TextStyle(fontSize: 15.0)),
               SizedBox(
                 height: 10.0,
               ),
@@ -80,7 +106,7 @@ class RequestCard extends StatelessWidget {
                 children: [
                   Tag(
                     color: Colors.blue[200],
-                    text: 'Active',
+                    text: request.status,
                   )
                 ],
               )

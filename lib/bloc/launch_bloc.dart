@@ -20,7 +20,6 @@ class LaunchBloc {
   }
 
   Future decideFlow() async {
-    await Future.delayed(Duration(seconds: 2));
     bool loggedIn = await alreadyLoggedIn();
     if (loggedIn) {
       await _authService.initAuthSession();

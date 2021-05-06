@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/models/user_model.dart';
+import 'package:rhealth/screens/search_results_screen.dart';
 import 'package:rhealth/screens/user_details.dart';
 import 'package:rhealth/screens/user_leads.dart';
 import 'package:rhealth/screens/user_plasma_donations.dart';
 import 'package:rhealth/screens/user_requests.dart';
+import 'package:rhealth/services/covid_api_service.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,6 +13,18 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  Future<void> openAllLeadsAndRequestsOfUserLocation() async {
+    CovidApiService covidApiService = CovidApiService();
+    UserLocalData userLocalData = await covidApiService.fetchUserLocalData();
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => SearchResults(
+                  searchQuery: userLocalData.pincode.toString(),
+                  searchFilter: 'all',
+                )));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +78,7 @@ class _ProfileState extends State<Profile> {
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
-                  onPressed: () {},
+                  onPressed: openAllLeadsAndRequestsOfUserLocation,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

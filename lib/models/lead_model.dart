@@ -63,7 +63,7 @@ class Lead {
       this.downvoteCount});
 
   static String getShareLink(String id) {
-    return "https://stage.channeli.in/api/covid_care/lead/" + id + "/";
+    return "https://stage.channeli.in/app/covid_care/lead/" + id + "/";
   }
 
   factory Lead.fromJSON(dynamic json) {
