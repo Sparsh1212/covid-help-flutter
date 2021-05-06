@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerTests extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('shimmer tests')),
-      body: ShimmerProfileCard(),
-    );
-  }
-}
-
 class ShimmerSingleCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
         child: Container(
-          padding: EdgeInsets.all(20.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

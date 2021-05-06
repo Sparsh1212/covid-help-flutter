@@ -122,7 +122,7 @@ class _SearchResultsState extends State<SearchResults>
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      LeadCard(),
+                      //LeadCard(),
                     ],
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/screens/launch_screen.dart';
-import 'package:rhealth/ui/shimmers.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ShimmerTests()//Launch(),
+      home: Launch(),
     );
   }
 }

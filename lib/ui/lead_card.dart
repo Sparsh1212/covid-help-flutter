@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/models/lead_model.dart';
 
 class LeadCard extends StatelessWidget {
+  final Lead lead;
+  LeadCard({@required this.lead});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +19,7 @@ class LeadCard extends StatelessWidget {
                 children: [
                   Expanded(
                       child: Text(
-                    'Remdisivir',
+                    lead.title,
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
@@ -31,8 +34,8 @@ class LeadCard extends StatelessWidget {
                         ),
                         Text(
                           'Share',
-                          style:
-                              TextStyle(fontSize: 18.0, color: Colors.blue[300]),
+                          style: TextStyle(
+                              fontSize: 18.0, color: Colors.blue[300]),
                         )
                       ]))
                 ],
@@ -40,26 +43,66 @@ class LeadCard extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              Text('Specification mentioned',
+              Text('Specification mentioned:',
                   style: TextStyle(fontSize: 15.0, color: Colors.grey[800])),
               SizedBox(
-                height: 10.0,
+                height: 15.0,
               ),
-              Text('1234, Sector-67, Gurugram, Haryana 122001',
+              lead.resourceType != 'plasma'
+                  ? Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Cost: ' + lead.nonPlasmaDescription.cost),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text('Capacity: ' +
+                              lead.nonPlasmaDescription.capacity),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text('Description: ' +
+                              lead.nonPlasmaDescription.description)
+                        ],
+                      ),
+                    )
+                  : Container(
+                      child: Column(
+                        children: [
+                          Text('Blood Group: ' +
+                              lead.plasmaDescription.bloodGroup),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text('Tested Positive: ' +
+                              lead.plasmaDescription.testedPositive.toString()),
+                          lead.plasmaDescription.testedPositive
+                              ? Text('Positive date: ' +
+                                  lead.plasmaDescription.positiveWhen)
+                              : Container(),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Text('Vaccinated: '+lead.plasmaDescription.vaccinated.toString())
+                        ],
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    ),
+              SizedBox(
+                height: 20.0,
+              ),
+              Text(lead.address,
                   style: TextStyle(fontSize: 15.0, color: Colors.grey[700])),
               SizedBox(
                 height: 10.0,
               ),
-              Text('Cost: Rs 199',
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[500])),
-              SizedBox(
-                height: 15.0,
-              ),
-              Text('Contact Details', style: TextStyle(fontSize: 15.0)),
+              Text('Contact: ' + lead.contact,
+                  style: TextStyle(fontSize: 15.0)),
               SizedBox(
                 height: 10.0,
               ),
-              Text('Verified by',
+              Text(lead.verifiedBy,
                   style: TextStyle(fontSize: 15.0, color: Colors.grey[800])),
               SizedBox(
                 height: 10.0,
@@ -77,7 +120,7 @@ class LeadCard extends StatelessWidget {
                     width: 2.0,
                   ),
                   Text(
-                    '7',
+                    lead.upvoteCount.toString(),
                     style: TextStyle(fontSize: 18.0),
                   ),
                   SizedBox(
@@ -93,7 +136,7 @@ class LeadCard extends StatelessWidget {
                     width: 3.0,
                   ),
                   Text(
-                    '3',
+                    lead.downvoteCount.toString(),
                     style: TextStyle(fontSize: 18.0),
                   ),
                 ],
