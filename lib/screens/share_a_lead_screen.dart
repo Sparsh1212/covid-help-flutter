@@ -33,41 +33,78 @@ class _ShareALeadState extends State<ShareALead> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               ),
               SizedBox(height: 10.0),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
+              themeFormTextField('name', 'Name', context, false),
+              FormBuilderDropdown(
+                name: 'resource_type',
+                initialValue: 'oxygen',
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  border: InputBorder.none,
                 ),
-                onPressed: _shareBloc.selectRequirements,
-                child: Text('Select leads'),
+                items: [
+                  DropdownMenuItem(
+                    value: 'oxygen',
+                    child: Text('Oxygen'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'remdesivir_tocilizumab',
+                    child: Text('Remdesivir & Tocilizumab'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'fabiflu_favipiravir',
+                    child: Text('Fabiflu & Favipiravir'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'hospital_beds',
+                    child: Text('Hospital beds'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'icu_and_ventilator',
+                    child: Text('ICU & Ventilator'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'other',
+                    child: Text('Other'),
+                  )
+                ],
               ),
               SizedBox(
                 height: 15.0,
               ),
-              StreamBuilder<List<bool>>(
-                  initialData: _shareBloc.metaTags,
-                  stream: _shareBloc.metaTagStream,
-                  builder: (context, snapshot) {
-                    return Column(
-                      children: snapshot.data
-                          .asMap()
-                          .entries
-                          .map((entry) => entry.value
-                              ? _shareBloc
-                                  .getAllRequirements(context)[entry.key]
-                              : Container())
-                          .toList(),
-                    );
-                  }),
               themeFormTextField('cost', 'Cost', context, true),
-              themeFormTextField('location', 'Location', context, false),
-              themeFormTextField(
-                  'address_hospital', 'Address/Hospital', context, false),
+              themeFormTextField('capacity', 'Capacity', context, false),
+              themeFormTextField('description', 'Description', context, false),
+              themeFormTextField('pincode', 'Pincode', context, true),
+              themeFormTextField('address', 'Address', context, false),
               themeFormTextField(
                   'contact_number', 'Contact Number', context, true),
               themeFormTextField('other_means_of_contact',
                   'Any other means of contact', context, false),
+              FormBuilderDropdown(
+                name: 'verification',
+                initialValue: 'verified_by_me',
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  border: InputBorder.none,
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: 'verified_by_me',
+                    child: Text('Verified By Me'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'verified_by_someone_else',
+                    child: Text('Verified By Someone Else'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'not_verified',
+                    child: Text('Not Verified'),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
               TextButton(
                 style: ButtonStyle(
                   backgroundColor:

@@ -1,101 +1,45 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:rhealth/styles/form_field_styles.dart';
+import 'package:rhealth/services/covid_api_service.dart';
+import 'package:rhealth/ui/message_modal.dart';
 
 class ShareBloc {
   final formKey = GlobalKey<FormBuilderState>();
-  final requirementsFormKey = GlobalKey<FormBuilderState>();
   BuildContext context;
-  List<bool> metaTags = [false, false, false];
+  CovidApiService _covidApiService = CovidApiService();
 
-  List<Widget> getAllRequirements(BuildContext screenContext) {
-    return [
-      themeSuffixFormTextField(
-          'req_1', 'Remdisivir', 'in no.s', screenContext, true),
-      themeSuffixFormTextField('req_2', 'Oxygen', 'in L', screenContext, false),
-      themeSuffixFormTextField('req_3', 'Beds', 'in no.s', screenContext, true),
-    ];
-  }
-
-  final _metaTagsController = StreamController<List<bool>>();
-  StreamSink<List<bool>> get _metaTagsSink => _metaTagsController.sink;
-  Stream<List<bool>> get metaTagStream => _metaTagsController.stream;
-
-  void submit() {
+  void submit() async {
     if (formKey.currentState.validate()) {
-      print(metaTags);
       formKey.currentState.save();
       print(formKey.currentState.value);
+      var postObj = {
+        "name": formKey.currentState.fields['name'].value,
+        "contact": formKey.currentState.fields['contact_number'].value,
+        "other_contact":
+            formKey.currentState.fields['other_means_of_contact'].value,
+        "pin_code": int.parse(formKey.currentState.fields['pincode'].value),
+        "address": formKey.currentState.fields['address'].value,
+        "verification": formKey.currentState.fields['verification'].value,
+        "resource": [
+          {
+            "resource_type": formKey.currentState.fields['resource_type'].value,
+            "cost": formKey.currentState.fields['cost'].value,
+            "capacity": formKey.currentState.fields['capacity'].value,
+            "description": formKey.currentState.fields['description'].value
+          }
+        ],
+        "plasmaDonor": []
+      };
+      await _covidApiService.postLead(postObj);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return MessageModal(
+              text:
+                  'Thankyou so much for your help. These are tough times and we hope that the situation improves soon. Stay safe!',
+              imgSrc: 'assets/images/thankss.png',
+            );
+          });
     }
-  }
-
-  void selectRequirements() {
-    showModalBottomSheet(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(25.0),
-                topRight: const Radius.circular(25.0))),
-        context: context,
-        builder: (context) {
-          return FormBuilder(
-            key: requirementsFormKey,
-            child: Container(
-              height: 280.0,
-              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
-              child: ListView(
-                children: [
-                  Text(
-                    'Requirements',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  Divider(),
-                  FormBuilderCheckbox(
-                      decoration: InputDecoration(
-                          isCollapsed: true, border: InputBorder.none),
-                      initialValue: false,
-                      name: '0',
-                      title: Text('Remdisivir')),
-                  FormBuilderCheckbox(
-                      decoration: InputDecoration(
-                          isCollapsed: true, border: InputBorder.none),
-                      initialValue: false,
-                      name: '1',
-                      title: Text('Oxygen')),
-                  FormBuilderCheckbox(
-                      decoration: InputDecoration(
-                          isCollapsed: true, border: InputBorder.none),
-                      initialValue: false,
-                      name: '2',
-                      title: Text('Bed')),
-                  TextButton(
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue[400]),
-                      foregroundColor:
-                          MaterialStateProperty.all<Color>(Colors.white),
-                    ),
-                    onPressed: requirementSelectAndProceed,
-                    child: Text('Select and Proceed'),
-                  )
-                ],
-              ),
-            ),
-          );
-        });
-  }
-
-  void requirementSelectAndProceed() {
-    requirementsFormKey.currentState.save();
-    for (int i = 0; i < metaTags.length; i++) {
-      metaTags[i] = requirementsFormKey.currentState.fields[i.toString()].value;
-    }
-    _metaTagsSink.add(metaTags);
-    Navigator.pop(context);
-  }
-
-  void dispose() {
-    _metaTagsController.close();
   }
 }

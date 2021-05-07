@@ -84,7 +84,9 @@ class CovidApiService {
 
     if (response.statusCode == 200) {
       Iterable list = jsonDecode(response.body);
-      return list.map<Request>((requestObj) => Request.fromJSON(requestObj)).toList();
+      return list
+          .map<Request>((requestObj) => Request.fromJSON(requestObj))
+          .toList();
     } else
       throw Exception('Error fetching user leads');
   }
@@ -102,7 +104,7 @@ class CovidApiService {
       throw Exception('Error fetching search results');
   }
 
-    Future<List<Bulletin>> fetchInfoBulletins() async {
+  Future<List<Bulletin>> fetchInfoBulletins() async {
     String accessToken = await getAcessToken();
 
     final http.Response response = await http.get(
@@ -111,8 +113,50 @@ class CovidApiService {
 
     if (response.statusCode == 200) {
       Iterable list = jsonDecode(response.body);
-      return list.map<Bulletin>((bulletinObj) => Bulletin.fromJSON(bulletinObj)).toList();
+      return list
+          .map<Bulletin>((bulletinObj) => Bulletin.fromJSON(bulletinObj))
+          .toList();
     } else
       throw Exception('Error fetching info bulletins');
-  }  
+  }
+
+  Future<void> postLead(var obj) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response =
+        await http.post(BASE_URL + COVID_API_BASE + EP_POST_LEAD,
+            headers: {
+              AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+              CONTENT_TYPE_KEY: CONTENT_TYPE
+            },
+            body: jsonEncode(obj));
+  }
+
+  Future<void> postPlasmaDonationLead(var obj) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response =
+        await http.post(BASE_URL + COVID_API_BASE + EP_POST_LEAD,
+            headers: {
+              AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+              CONTENT_TYPE_KEY: CONTENT_TYPE
+            },
+            body: jsonEncode(obj));
+    print(response.statusCode);
+    print(response.body);
+  }
+
+  Future<void> postRequest(var obj) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response =
+        await http.post(BASE_URL + COVID_API_BASE + EP_POST_REQUEST,
+            headers: {
+              AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+              CONTENT_TYPE_KEY: CONTENT_TYPE
+            },
+            body: jsonEncode(obj));
+    print(response.statusCode);
+    print(response.body);
+  }
 }

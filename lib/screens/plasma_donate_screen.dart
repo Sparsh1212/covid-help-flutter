@@ -41,33 +41,54 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                   Container(
                     width: 80.0,
                     child: FormBuilderDropdown(
-                name: 'blood_group',
-                initialValue: 'o+',
-                decoration: InputDecoration(
-                  filled: true,
-                    border: InputBorder.none,
-                    isCollapsed: true,
-                    contentPadding: EdgeInsets.all(8.0)
-                ),
-                items: [
-                    DropdownMenuItem(
-                      value: 'o+',
-                      child: Text('O+'),
+                      name: 'blood_group',
+                      initialValue: 'O+',
+                      decoration: InputDecoration(
+                          filled: true,
+                          border: InputBorder.none,
+                          isCollapsed: true,
+                          contentPadding: EdgeInsets.all(8.0)),
+                      items: [
+                        DropdownMenuItem(
+                          value: 'O+',
+                          child: Text('O+'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'O-',
+                          child: Text('O-'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'A+',
+                          child: Text('A+'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'A-',
+                          child: Text('A-'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'B+',
+                          child: Text('B+'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'B-',
+                          child: Text('B+'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'AB+',
+                          child: Text('AB+'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'AB-',
+                          child: Text('AB-'),
+                        )
+                      ],
                     ),
-                    DropdownMenuItem(
-                      value: 'o-',
-                      child: Text('O-'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'a+',
-                      child: Text('A+'),
-                    )
-                ],
-              ),
                   )
                 ],
               ),
-              SizedBox(height: 15.0,),
+              SizedBox(
+                height: 15.0,
+              ),
               Text('Have you ever been tested positive?'),
               Row(
                 children: [
@@ -89,19 +110,14 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                       child: Container(
                         child: DateTimePicker(
                           decoration: InputDecoration(
-                            hintText: 'Date',
-                            isCollapsed: true
-                          ),
+                              hintText: 'Date', isCollapsed: true),
                           initialValue: '',
                           firstDate: DateTime(2000),
                           lastDate: DateTime(2100),
                           dateLabelText: 'Date',
-                          onChanged: (val) => print(val),
-                          validator: (val) {
-                            print(val);
-                            return null;
-                          },
-                          onSaved: (val) => print(val),
+                          onChanged: (val) =>
+                              _donateBloc.updatePositiveWhen(val),
+                          onSaved: (val) => _donateBloc.updatePositiveWhen(val),
                         ),
                       ),
                     ),
@@ -125,14 +141,39 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
               SizedBox(
                 height: 10.0,
               ),
+              themeFormTextField('description', 'Description', context, false),
               themeFormTextField('donor_name', 'Donor Name', context, false),
-              themeFormTextField('location', 'Location', context, false),
-              themeFormTextField(
-                  'address_hospital', 'Address/Hospital', context, false),
+              themeFormTextField('pincode', 'Pincode', context, true),
+              themeFormTextField('address', 'Address', context, false),
               themeFormTextField(
                   'contact_number', 'Contact Number', context, true),
               themeFormTextField('other_means_of_contact',
                   'Any other means of contact', context, false),
+              FormBuilderDropdown(
+                name: 'verification',
+                initialValue: 'verified_by_me',
+                decoration: InputDecoration(
+                  isCollapsed: true,
+                  border: InputBorder.none,
+                ),
+                items: [
+                  DropdownMenuItem(
+                    value: 'verified_by_me',
+                    child: Text('Verified By Me'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'verified_by_someone_else',
+                    child: Text('Verified By Someone Else'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'not_verified',
+                    child: Text('Not Verified'),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
               Row(
                 children: [
                   Expanded(

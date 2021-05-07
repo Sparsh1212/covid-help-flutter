@@ -11,7 +11,6 @@ class Request extends StatefulWidget {
 class _RequestState extends State<Request> {
   RequestBloc _requestBloc = RequestBloc();
 
-
   @override
   void initState() {
     _requestBloc.context = context;
@@ -34,17 +33,18 @@ class _RequestState extends State<Request> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               ),
               SizedBox(height: 10.0),
-             TextButton(
+              TextButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.red),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: _requestBloc.selectRequirements,
                 child: Text('Add Requirements'),
               ),
-              SizedBox(height: 10.0,),
+              SizedBox(
+                height: 10.0,
+              ),
               StreamBuilder<List<bool>>(
                   initialData: _requestBloc.metaTags,
                   stream: _requestBloc.metaTagStream,
@@ -54,45 +54,32 @@ class _RequestState extends State<Request> {
                           .asMap()
                           .entries
                           .map((entry) => entry.value
-                              ? _requestBloc.getAllRequirements(context)[entry.key]
+                              ? _requestBloc
+                                  .getAllRequirements(context)[entry.key]
                               : Container())
                           .toList(),
                     );
                   }),
               themeFormTextField(
                   'patient_name', 'Patient Name', context, false),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 5,
-                    child: themeFormTextField('patient_aadhar_card',
-                        'Patient Aadhar Card Number', context, false),
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Expanded(
-                      flex: 2,
-                      child: themeFormTextField('age', 'Age', context, true))
-                ],
-              ),
+              themeFormTextField('age', 'Age', context, true),
               Row(
                 children: [
                   Expanded(
                     child: themeFormTextField(
-                        'patient_ct_value', 'Patient CT value', context, false),
+                        'patient_ct_value', 'Patient CT value', context, true),
                   ),
                   SizedBox(
                     width: 10.0,
                   ),
                   Expanded(
                       child: themeFormTextField('patient_spo2_level',
-                          'Patient SPO2 level', context, true))
+                          'Patient SPO2 level', context, false))
                 ],
               ),
-              themeFormTextField('location', 'Location', context, false),
+              themeFormTextField('pincode', 'Pincode', context, true),
               themeFormTextField(
-                  'address_hospital', 'Address/Hospital', context, false),
+                  'address', 'Address', context, false),
               themeFormTextField(
                   'contact_number', 'Contact Number', context, true),
               themeFormTextField('other_means_of_contact',

@@ -16,3 +16,5 @@ const String EP_USER_PLASMA_DONATIONS = 'my-plasma-donations';
 const String EP_USER_REQUESTS = 'my-requests';
 const String EP_SEARCH = 'search?';
 const String EP_INFO_BULLETINS = 'bulletin';
+const String EP_POST_LEAD = 'lead/';
+const String EP_POST_REQUEST = 'request/';
