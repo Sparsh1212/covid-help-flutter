@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 

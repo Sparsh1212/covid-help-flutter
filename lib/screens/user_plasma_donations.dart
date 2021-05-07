@@ -14,10 +14,10 @@ class _UserPlasmaDonationsState extends State<UserPlasmaDonations> {
   UserPlasmaDonationsBloc _userPlasmaDonationsBloc = UserPlasmaDonationsBloc();
 
   @override
-    void initState() {
-      _userPlasmaDonationsBloc.getUserPlasmaDonations();
-      super.initState();
-    }
+  void initState() {
+    _userPlasmaDonationsBloc.getUserPlasmaDonations();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,8 @@ class _UserPlasmaDonationsState extends State<UserPlasmaDonations> {
                     .map((leadObj) => SingleChildScrollView(
                             child: UserPlasmaDonationsCard(
                           lead: leadObj,
+                          onWithdraw: () => _userPlasmaDonationsBloc
+                              .withdrawDonation(leadObj),
                         )))
                     .toList(),
               );

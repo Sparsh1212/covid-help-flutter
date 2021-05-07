@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/lead_model.dart';
+import 'package:share/share.dart';
 
 class UserPlasmaDonationsCard extends StatelessWidget {
   final Lead lead;
-  UserPlasmaDonationsCard({@required this.lead});
+  final VoidCallback onWithdraw;
+  UserPlasmaDonationsCard({@required this.lead, @required this.onWithdraw});
+
+  void shareLead(String link) {
+    Share.share(link);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +30,7 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => shareLead(lead.shareLink),
                       child: Row(children: [
                         Icon(
                           Icons.share,
@@ -143,8 +150,11 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                 ],
               ),
               Divider(),
-              Text('Withdraw',
-                  style: TextStyle(fontSize: 15.0, color: Colors.red[300]))
+              InkWell(
+                onTap: () => onWithdraw(),
+                child: Text('Withdraw',
+                    style: TextStyle(fontSize: 15.0, color: Colors.red[300])),
+              )
             ],
           ),
         ),

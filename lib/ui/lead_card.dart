@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/lead_model.dart';
+import 'package:share/share.dart';
 
 class LeadCard extends StatelessWidget {
   final Lead lead;
   LeadCard({@required this.lead});
+
+  void shareLead(String link) {
+    Share.share(link);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,7 +29,7 @@ class LeadCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => shareLead(lead.shareLink),
                       child: Row(children: [
                         Icon(
                           Icons.share,
@@ -84,7 +90,8 @@ class LeadCard extends StatelessWidget {
                           SizedBox(
                             height: 10.0,
                           ),
-                          Text('Vaccinated: '+lead.plasmaDescription.vaccinated.toString())
+                          Text('Vaccinated: ' +
+                              lead.plasmaDescription.vaccinated.toString())
                         ],
                         crossAxisAlignment: CrossAxisAlignment.start,
                       ),

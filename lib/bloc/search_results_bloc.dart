@@ -35,6 +35,24 @@ class SearchResultsBloc {
     _requestsSink.add(requestsList);
   }
 
+  void sortLeadsByUpvotes() {
+    leadsList.sort((b, a) => a.upvoteCount.compareTo(b.upvoteCount));
+    _leadsSink.add(leadsList);
+  }
+
+  void sortLeadsByDate() {
+    leadsList.sort((b, a) => a.id.compareTo(b.id));
+    _leadsSink.add(leadsList);
+  }
+
+  void sort(String value) {
+    if (value == 'latest') {
+      sortLeadsByDate();
+    } else {
+      sortLeadsByUpvotes();
+    }
+  }
+
   void dispose() {
     _leadsController.close();
     _requestsController.close();

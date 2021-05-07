@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 
+
 class UserRequestsBloc {
   List<Request> userRequests;
   CovidApiService _covidApiService = CovidApiService();

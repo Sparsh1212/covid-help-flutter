@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/ui/tag_container.dart';
+import 'package:share/share.dart';
 
 class UserRequestCard extends StatelessWidget {
   final Request request;
   UserRequestCard({@required this.request});
+
+   void shareRequest(String link) {
+    Share.share(link);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,7 @@ class UserRequestCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => shareRequest(request.shareLink),
                       child: Row(children: [
                         Icon(
                           Icons.share,

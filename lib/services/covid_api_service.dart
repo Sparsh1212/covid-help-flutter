@@ -156,7 +156,15 @@ class CovidApiService {
               CONTENT_TYPE_KEY: CONTENT_TYPE
             },
             body: jsonEncode(obj));
+  }
+
+  Future<void> deleteUserPlasmaDonation(String id) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http
+        .delete(BASE_URL + COVID_API_BASE + EP_POST_LEAD + id + '/', headers: {
+      AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+    });
     print(response.statusCode);
-    print(response.body);
   }
 }

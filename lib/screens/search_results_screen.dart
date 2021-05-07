@@ -102,6 +102,7 @@ class _SearchResultsState extends State<SearchResults>
                   width: 140.0,
                   child: FormBuilder(
                       child: FormBuilderDropdown(
+                    onChanged: (String value) => _searchResultsBloc.sort(value),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         prefixIcon: Icon(
