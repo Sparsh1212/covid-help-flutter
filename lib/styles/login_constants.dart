@@ -21,6 +21,7 @@ Widget containsBranding(BuildContext context, double _width, double _height) {
     width: _width * 0.75,
     child: Row(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Expanded(
           flex: 1,
@@ -46,19 +47,18 @@ Widget containsBranding(BuildContext context, double _width, double _height) {
 Container buildContactImgContainer(double _width) {
   return Container(
     width: _width * 0.60,
-    child: Row(
+    child:Column(
       children: <Widget>[
-        Expanded(
-            child: Text(
+        Text(
           "Having trouble signing in?",
-          style: TextStyle(fontSize: 12.0),
-        )),
+          style: TextStyle(fontSize: 14.0),
+        ),
+        SizedBox(height: 10.0),
         Text(
           "Contact IMG",
           overflow: TextOverflow.fade,
           style: TextStyle(
-              fontSize: 12.0,
-              decoration: TextDecoration.underline,
+              fontSize: 14.0,
               fontWeight: FontWeight.bold),
         ),
       ],

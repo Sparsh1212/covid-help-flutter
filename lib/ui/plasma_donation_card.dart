@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
@@ -48,14 +49,14 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                   Expanded(
                       child: Text(
                     lead.title,
-                    style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
+                    style: TextStyle(fontSize: 18.0, color: blueDark),
                   )),
                   InkWell(
                       onTap: () => shareLead(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,
-                          color: Colors.blue[300],
+                          color: blueModerate,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -63,7 +64,7 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                         Text(
                           'Share',
                           style: TextStyle(
-                              fontSize: 18.0, color: Colors.blue[300]),
+                              fontSize: 18.0, color: blueModerate),
                         )
                       ]))
                 ],
@@ -72,9 +73,9 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                 height: 10.0,
               ),
               Text('Specification mentioned:',
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[800])),
+                  style: TextStyle(fontSize: 15.0, color: greyLight)),
               SizedBox(
-                height: 15.0,
+                height: 5.0,
               ),
               lead.resourceType != 'plasma'
                   ? Container(
@@ -83,12 +84,12 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                         children: [
                           Text('Cost: ' + lead.nonPlasmaDescription.cost),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           Text('Capacity: ' +
                               lead.nonPlasmaDescription.capacity),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           Text('Description: ' +
                               lead.nonPlasmaDescription.description)
@@ -119,12 +120,12 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                       ),
                     ),
               SizedBox(
-                height: 20.0,
+                height: 15.0,
               ),
               Text(lead.address,
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[700])),
+                  style: TextStyle(fontSize: 15.0, color: greyLight)),
               SizedBox(
-                height: 10.0,
+                height: 5.0,
               ),
               Text('Contact: ' + lead.contact,
                   style: TextStyle(fontSize: 15.0)),
@@ -143,14 +144,14 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                       onTap: () => onUpvote(),
                       child: Icon(
                         Icons.thumb_up,
-                        color: Colors.green[300],
+                        color: Colors.green[100],
                       )),
                   SizedBox(
                     width: 2.0,
                   ),
                   Text(
                     lead.upvoteCount.toString(),
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 18.0, color: greyDark),
                   ),
                   SizedBox(
                     width: 15.0,
@@ -159,14 +160,14 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                       onTap: () => onDownvote(),
                       child: Icon(
                         Icons.thumb_down,
-                        color: Colors.pink[300],
+                        color: Colors.pink[100],
                       )),
                   SizedBox(
                     width: 3.0,
                   ),
                   Text(
                     lead.downvoteCount.toString(),
-                    style: TextStyle(fontSize: 18.0),
+                    style: TextStyle(fontSize: 18.0, color: greyDark),
                   ),
                 ],
               ),

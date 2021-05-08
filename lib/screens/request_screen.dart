@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/request_bloc.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
 
 class Request extends StatefulWidget {
@@ -33,14 +34,16 @@ class _RequestState extends State<Request> {
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
               ),
               SizedBox(height: 10.0),
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
+              InkWell(
+                onTap: () => _requestBloc.selectRequirements(),
+                child: Row(
+                  children: [
+                    Text('Add Requirements', style: TextStyle(
+                      color: blueDark,
+                      fontSize: 18.0
+                    ),), SizedBox(width: 5.0,), Icon(Icons.arrow_drop_down, color: blueDark, size: 30.0,)
+                  ],
                 ),
-                onPressed: _requestBloc.selectRequirements,
-                child: Text('Add Requirements'),
               ),
               SizedBox(
                 height: 10.0,
@@ -87,12 +90,12 @@ class _RequestState extends State<Request> {
               TextButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                      MaterialStateProperty.all<Color>(blueModerate),
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: _requestBloc.submit,
-                child: Text('Submit'),
+                child: Text('Submit', style: t18,),
               ),
             ],
           ),

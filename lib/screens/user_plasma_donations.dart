@@ -39,16 +39,18 @@ class _UserPlasmaDonationsState extends State<UserPlasmaDonations> {
                   autoPlay: true,
                 ),
                 items: snapshot.data
-                    .map((leadObj) => SingleChildScrollView(
-                            child: UserPlasmaDonationsCard(
-                          lead: leadObj,
-                          onUpvote: () =>
-                              _userPlasmaDonationsBloc.upVote(leadObj),
-                          onDownvote: () =>
-                              _userPlasmaDonationsBloc.downVote(leadObj),
-                          onWithdraw: () => _userPlasmaDonationsBloc
-                              .withdrawDonation(leadObj),
-                        )))
+                    .map((leadObj) => Scrollbar(
+                      child: SingleChildScrollView(
+                              child: UserPlasmaDonationsCard(
+                            lead: leadObj,
+                            onUpvote: () =>
+                                _userPlasmaDonationsBloc.upVote(leadObj),
+                            onDownvote: () =>
+                                _userPlasmaDonationsBloc.downVote(leadObj),
+                            onWithdraw: () => _userPlasmaDonationsBloc
+                                .withdrawDonation(leadObj),
+                          )),
+                    ))
                     .toList(),
               );
             }

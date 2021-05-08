@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/share_bloc.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
 
 class ShareALead extends StatefulWidget {
@@ -38,6 +39,9 @@ class _ShareALeadState extends State<ShareALead> {
                 name: 'resource_type',
                 initialValue: 'oxygen',
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: EdgeInsets.all(6.0),
                   isCollapsed: true,
                   border: InputBorder.none,
                 ),
@@ -84,6 +88,9 @@ class _ShareALeadState extends State<ShareALead> {
                 name: 'verification',
                 initialValue: 'verified_by_me',
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: EdgeInsets.all(6.0),
                   isCollapsed: true,
                   border: InputBorder.none,
                 ),
@@ -103,17 +110,17 @@ class _ShareALeadState extends State<ShareALead> {
                 ],
               ),
               SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
               TextButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                      MaterialStateProperty.all<Color>(blueModerate),
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 onPressed: _shareBloc.submit,
-                child: Text('Submit'),
+                child: Text('Submit', style: t18,),
               )
             ],
           ),

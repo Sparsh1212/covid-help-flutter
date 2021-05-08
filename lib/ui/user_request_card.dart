@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
@@ -43,14 +44,14 @@ class UserRequestCard extends StatelessWidget {
                   Expanded(
                       child: Text(
                     request.title,
-                    style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
+                    style: TextStyle(fontSize: 18.0, color: blueDark),
                   )),
                   InkWell(
                       onTap: () => shareRequest(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,
-                          color: Colors.blue[300],
+                          color: blueModerate,
                         ),
                         SizedBox(
                           width: 5.0,
@@ -58,7 +59,7 @@ class UserRequestCard extends StatelessWidget {
                         Text(
                           'Share',
                           style: TextStyle(
-                              fontSize: 18.0, color: Colors.blue[300]),
+                              fontSize: 18.0, color: blueModerate),
                         )
                       ]))
                 ],
@@ -67,9 +68,9 @@ class UserRequestCard extends StatelessWidget {
                 height: 10.0,
               ),
               Text('Specification mentioned',
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[800])),
+                  style: TextStyle(fontSize: 15.0, color: greyLight)),
               SizedBox(
-                height: 15.0,
+                height: 5.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,39 +84,39 @@ class UserRequestCard extends StatelessWidget {
                     .toList(),
               ),
               SizedBox(
-                height: 10.0,
+                height: 15.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     'For: ' + request.patientName,
-                    style: TextStyle(fontSize: 15.0, color: Colors.grey[800]),
+                    style: TextStyle(fontSize: 15.0, color: greyDark),
                   ),
                   Text('Age: ' + request.patientAge,
-                      style: TextStyle(fontSize: 15.0, color: Colors.grey[800]))
+                      style: TextStyle(fontSize: 15.0, color: greyDark))
                 ],
               ),
               SizedBox(
-                height: 10.0,
+                height: 5.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text('CT value: ' + request.patientCtValue,
                       style:
-                          TextStyle(fontSize: 15.0, color: Colors.grey[800])),
+                          TextStyle(fontSize: 15.0, color: greyDark)),
                   Text('SPO2 value: ' + request.patientSpo2Value,
-                      style: TextStyle(fontSize: 15.0, color: Colors.grey[800]))
+                      style: TextStyle(fontSize: 15.0, color: greyDark))
                 ],
               ),
               SizedBox(
-                height: 20.0,
+                height: 15.0,
               ),
               Text(request.address,
-                  style: TextStyle(fontSize: 15.0, color: Colors.grey[700])),
+                  style: TextStyle(fontSize: 15.0, color: greyLight)),
               SizedBox(
-                height: 10.0,
+                height: 5.0,
               ),
               Text('Contact: ' + request.contact,
                   style: TextStyle(fontSize: 15.0)),
@@ -126,12 +127,13 @@ class UserRequestCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Tag(
-                    color: Colors.blue[200],
+                    color: blueModerate,
                     text: request.status,
                   )
                 ],
               ),
               Divider(),
+              SizedBox(height: 5.0,),
               Text('Update status:  ', style: TextStyle(fontSize: 15.0)),
               SizedBox(
                 height: 10.0,
@@ -150,7 +152,7 @@ class UserRequestCard extends StatelessWidget {
         children: [
           InkWell(
               onTap: () => onStatusChanged('fulfilled'),
-              child: Tag(text: 'Fulfilled', color: Colors.blue[300])),
+              child: Tag(text: 'Fulfilled', color: Colors.green[100])),
           SizedBox(
             width: 5.0,
           ),
@@ -158,7 +160,7 @@ class UserRequestCard extends StatelessWidget {
             onTap: () => onStatusChanged('not_required_anymore'),
             child: Tag(
               text: 'Not Required Anymore',
-              color: Colors.pink[200],
+              color: Colors.pink[100],
             ),
           )
         ],
@@ -168,7 +170,7 @@ class UserRequestCard extends StatelessWidget {
         children: [
           InkWell(
               onTap: () => onStatusChanged('active'),
-              child: Tag(text: 'Active', color: Colors.blue[300])),
+              child: Tag(text: 'Active', color: Colors.green[100])),
           SizedBox(
             width: 5.0,
           ),
@@ -176,7 +178,7 @@ class UserRequestCard extends StatelessWidget {
             onTap: () => onStatusChanged('not_required_anymore'),
             child: Tag(
               text: 'Not Required Anymore',
-              color: Colors.pink[200],
+              color: Colors.pink[100],
             ),
           )
         ],
@@ -186,7 +188,7 @@ class UserRequestCard extends StatelessWidget {
         children: [
           InkWell(
               onTap: () => onStatusChanged('active'),
-              child: Tag(text: 'Active', color: Colors.blue[300])),
+              child: Tag(text: 'Active', color: Colors.green[100])),
           SizedBox(
             width: 5.0,
           ),
@@ -194,7 +196,7 @@ class UserRequestCard extends StatelessWidget {
             onTap: () => onStatusChanged('fulfilled'),
             child: Tag(
               text: 'Fulfilled',
-              color: Colors.pink[200],
+              color: Colors.pink[100],
             ),
           )
         ],

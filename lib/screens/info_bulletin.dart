@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/models/info_bulletin.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/ui/shimmers.dart';
@@ -27,7 +28,7 @@ class _InfoBulletinState extends State<InfoBulletin> {
           children: [
             Text(
               'Information Bulletin',
-              style: TextStyle(color: Colors.blue[700], fontSize: 20.0),
+              style: TextStyle(color: blueDark, fontSize: 20.0),
             ),
             SizedBox(
               height: 15.0,
@@ -42,30 +43,34 @@ class _InfoBulletinState extends State<InfoBulletin> {
                           itemBuilder: (context, index) {
                             return Container(
                               decoration: BoxDecoration(
-                                  color: Colors.blue[50],
+                                  color: blueLight,
                                   borderRadius: BorderRadius.circular(5.0)),
                               padding: EdgeInsets.all(8.0),
                               margin: EdgeInsets.only(bottom: 25.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    snapshot.data[index].title,
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.bold),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Container(
+                                          child: Text(
+                                            snapshot.data[index].title,
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.0,),
+                                      InkWell(
+                                        onTap: () => launchURL(snapshot.data[index].link),
+                                        child: Icon(Icons.open_in_new_rounded, color: blueModerate,))
+                                    ],
                                   ),
                                   Html(data: snapshot.data[index].description),
-                                  InkWell(
-                                    onTap: () => launchURL(snapshot.data[index].link),
-                                    child: Text(
-                                      'Link',
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          decoration: TextDecoration.underline),
-                                    ),
-                                  )
                                 ],
                               ),
                             );

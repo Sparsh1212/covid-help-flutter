@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
@@ -195,7 +196,7 @@ class RequestBloc {
                   TextButton(
                     style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.blue[400]),
+                          MaterialStateProperty.all<Color>(blueModerate),
                       foregroundColor:
                           MaterialStateProperty.all<Color>(Colors.white),
                     ),

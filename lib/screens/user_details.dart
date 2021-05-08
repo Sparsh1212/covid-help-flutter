@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/models/user_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/ui/shimmers.dart';
@@ -19,42 +20,42 @@ class UserDetails extends StatelessWidget {
                 children: [
                   Text(
                     user.name,
-                    style: TextStyle(color: Colors.blue[700], fontSize: 18.0),
+                    style: TextStyle(color: blueDark, fontSize: 18.0),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(
                     user.degree,
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey[500]),
+                    style: TextStyle(fontSize: 18.0, color: greyDark),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(
                     user.currentYear,
-                    style: TextStyle(fontSize: 18.0, color: Colors.grey[500]),
+                    style: TextStyle(fontSize: 18.0, color: greyDark),
                   ),
                   SizedBox(
-                    height: 20.0,
+                    height: 15.0,
                   ),
                   Text(
                     'Contact Number: ' + user.contactNumber,
-                    style: TextStyle(fontSize: 18.0),
+                    style: t16,
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 10.0,
                   ),
                   Text(
                     'Address: ' + user.address,
-                    style: TextStyle(fontSize: 18.0),
+                    style: t16,
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 10.0,
                   ),
                   Text(
                     'If you wish to edit these details for the mail services, please contact IMG.',
-                    style: TextStyle(color: Colors.blue[700], fontSize: 16.0),
+                    style: TextStyle(color: blueModerate, fontSize: 16.0),
                   )
                 ],
               );

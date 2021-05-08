@@ -34,19 +34,21 @@ class _UserRequestsState extends State<UserRequests> {
               }
               return CarouselSlider(
                 options: CarouselOptions(
-                  height: 370.0,
+                  height: 400.0,
                   viewportFraction: 1.0,
                   autoPlay: true,
                 ),
                 items: snapshot.data
-                    .map((requestObj) => SingleChildScrollView(
-                            child: UserRequestCard(
-                          request: requestObj,
-                          onStatusChanged: (String updatedStatus) =>
-                              _userRequestsBloc.updateStatus(
-                                  snapshot.data.indexOf(requestObj),
-                                  updatedStatus),
-                        )))
+                    .map((requestObj) => Scrollbar(
+                      child: SingleChildScrollView(
+                              child: UserRequestCard(
+                            request: requestObj,
+                            onStatusChanged: (String updatedStatus) =>
+                                _userRequestsBloc.updateStatus(
+                                    snapshot.data.indexOf(requestObj),
+                                    updatedStatus),
+                          )),
+                    ))
                     .toList(),
               );
             }

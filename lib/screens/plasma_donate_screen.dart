@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/donate_bloc.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
@@ -45,9 +46,10 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                       initialValue: 'O+',
                       decoration: InputDecoration(
                           filled: true,
+                          fillColor: Colors.grey[200],
                           border: InputBorder.none,
                           isCollapsed: true,
-                          contentPadding: EdgeInsets.all(8.0)),
+                          contentPadding: EdgeInsets.all(6.0)),
                       items: [
                         DropdownMenuItem(
                           value: 'O+',
@@ -153,6 +155,9 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                 name: 'verification',
                 initialValue: 'verified_by_me',
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  contentPadding: EdgeInsets.all(6.0),
                   isCollapsed: true,
                   border: InputBorder.none,
                 ),
@@ -172,7 +177,7 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                 ],
               ),
               SizedBox(
-                height: 20.0,
+                height: 10.0,
               ),
               Row(
                 children: [
@@ -186,7 +191,9 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: _donateBloc.submitAndAddAnother,
-                        child: Text('Submit and add another member')),
+                        child: Text('Submit and add another member', style: TextStyle(
+                          fontSize: 14.0
+                        ),)),
                   ),
                   SizedBox(
                     width: 10.0,
@@ -196,12 +203,14 @@ class _PlasmaDonateState extends State<PlasmaDonate> {
                     child: TextButton(
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
+                              MaterialStateProperty.all<Color>(blueModerate),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: _donateBloc.submit,
-                        child: Text('Submit')),
+                        child: Text('Submit', style: TextStyle(
+                          fontSize: 15.0
+                        ),)),
                   ),
                 ],
               )

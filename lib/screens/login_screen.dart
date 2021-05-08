@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/enum/enums.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
 import '../bloc/login_bloc.dart';
 import '../styles/login_constants.dart';
@@ -67,7 +68,7 @@ class _LoginState extends State<Login> {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Colors.blue[200]),
+                                          blueModerate),
                                   foregroundColor:
                                       MaterialStateProperty.all<Color>(
                                           Colors.white),

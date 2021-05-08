@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/constants.dart';
 import 'package:rhealth/models/user_model.dart';
 import 'package:rhealth/screens/search_results_screen.dart';
 import 'package:rhealth/screens/user_details.dart';
@@ -47,9 +48,9 @@ class _ProfileState extends State<Profile> {
             children: [
               UserDetails(),
               SizedBox(
-                height: 15,
+                height: 25,
               ),
-              Text('My Requests', style: TextStyle(fontSize: 16)),
+              Text('My Requests', style: t20),
               SizedBox(
                 height: 15,
               ),
@@ -57,7 +58,7 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 15.0,
               ),
-              Text('Shared leads', style: TextStyle(fontSize: 16)),
+              Text('Shared leads', style: t20),
               SizedBox(
                 height: 15,
               ),
@@ -65,16 +66,17 @@ class _ProfileState extends State<Profile> {
               SizedBox(
                 height: 15.0,
               ),
-              Text('Plasma Donation', style: TextStyle(fontSize: 16)),
+              Text('Plasma Donation', style: t20),
               SizedBox(
                 height: 15.0,
               ),
               UserPlasmaDonations(),
+              SizedBox(height: 15.0,),
               Center(
                 child: TextButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue[400]),
+                        MaterialStateProperty.all<Color>(blueModerate),
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
