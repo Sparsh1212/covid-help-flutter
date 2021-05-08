@@ -41,6 +41,10 @@ class _UserRequestsState extends State<UserRequests> {
                     .map((requestObj) => SingleChildScrollView(
                             child: UserRequestCard(
                           request: requestObj,
+                          onStatusChanged: (String updatedStatus) =>
+                              _userRequestsBloc.updateStatus(
+                                  snapshot.data.indexOf(requestObj),
+                                  updatedStatus),
                         )))
                     .toList(),
               );

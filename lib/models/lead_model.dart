@@ -37,8 +37,8 @@ class PlasmaDescription {
 
 class Lead {
   final int id;
-  final int upvoteCount;
-  final int downvoteCount;
+  int upvoteCount;
+  int downvoteCount;
   final String title;
   final String address;
   final String contact;

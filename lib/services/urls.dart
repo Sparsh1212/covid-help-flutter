@@ -18,3 +18,4 @@ const String EP_SEARCH = 'search?';
 const String EP_INFO_BULLETINS = 'bulletin';
 const String EP_POST_LEAD = 'lead/';
 const String EP_POST_REQUEST = 'request/';
+const String EP_POST_VOTE = 'lead-vote';

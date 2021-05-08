@@ -5,6 +5,7 @@ import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/models/search_results_model.dart';
 import 'package:rhealth/models/token_model.dart';
 import 'package:rhealth/models/user_model.dart';
+import 'package:rhealth/models/votes_model.dart';
 import 'package:rhealth/services/auth_service.dart';
 import 'package:rhealth/services/urls.dart';
 import 'package:http/http.dart' as http;
@@ -120,6 +121,34 @@ class CovidApiService {
       throw Exception('Error fetching info bulletins');
   }
 
+  Future<String> fetchLeadTemplateLink(String id) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http.get(
+        BASE_URL + COVID_API_BASE + 'lead-template?id=' + id,
+        headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['templateLink'];
+    } else {
+      throw Exception('Error fetching lead template');
+    }
+  }
+
+  Future<String> fetchRequestTemplateLink(String id) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response = await http.get(
+        BASE_URL + COVID_API_BASE + 'request-template?id=' + id,
+        headers: {AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken});
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)['templateLink'];
+    } else {
+      throw Exception('Error fetching request template');
+    }
+  }
+
   Future<void> postLead(var obj) async {
     String accessToken = await getAcessToken();
 
@@ -165,6 +194,34 @@ class CovidApiService {
         .delete(BASE_URL + COVID_API_BASE + EP_POST_LEAD + id + '/', headers: {
       AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
     });
-    print(response.statusCode);
+  }
+
+  Future<Votes> postVotes(var obj) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response =
+        await http.post(BASE_URL + COVID_API_BASE + EP_POST_VOTE,
+            headers: {
+              AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+              CONTENT_TYPE_KEY: CONTENT_TYPE
+            },
+            body: jsonEncode(obj));
+    if (response.statusCode == 200) {
+      return Votes.fromJSON(jsonDecode(response.body));
+    } else {
+      throw Exception('Error voting');
+    }
+  }
+
+  Future<void> patchStatus(String id, var obj) async {
+    String accessToken = await getAcessToken();
+
+    final http.Response response =
+        await http.patch(BASE_URL + COVID_API_BASE + EP_POST_REQUEST + id + '/',
+            headers: {
+              AUTHORIZAION_KEY: AUTHORIZATION_PREFIX + accessToken,
+              CONTENT_TYPE_KEY: CONTENT_TYPE
+            },
+            body: jsonEncode(obj));
   }
 }

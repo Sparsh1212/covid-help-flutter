@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/search_results_bloc.dart';
+import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/screens/lead_tab_bar.dart';
 import 'package:rhealth/screens/requests_tab_bar.dart';
 
@@ -129,7 +130,11 @@ class _SearchResultsState extends State<SearchResults>
                 child: TabBarView(
               controller: _tabController,
               children: [
-                LeadTabBar(leadsStream: _searchResultsBloc.leadsStream),
+                LeadTabBar(
+                  leadsStream: _searchResultsBloc.leadsStream,
+                  onUpvote: (Lead lead) => _searchResultsBloc.upVote(lead),
+                  onDownvote: (Lead lead) => _searchResultsBloc.downVote(lead),
+                ),
                 RequestTabBar(requestsStream: _searchResultsBloc.requestsStream)
               ],
             ))

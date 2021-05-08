@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/request_model.dart';
+import 'package:rhealth/services/covid_api_service.dart';
+import 'package:rhealth/ui/share_modal.dart';
 import 'package:rhealth/ui/tag_container.dart';
-import 'package:share/share.dart';
 
 class UserRequestCard extends StatelessWidget {
   final Request request;
-  UserRequestCard({@required this.request});
+  final Function(String) onStatusChanged;
+  UserRequestCard({@required this.request, @required this.onStatusChanged});
+  final CovidApiService _covidApiService = CovidApiService();
 
-   void shareRequest(String link) {
-    Share.share(link);
+  void shareRequest(BuildContext context) async {
+    String imgSrc =
+        await _covidApiService.fetchRequestTemplateLink(request.id.toString());
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShareModal(
+            imgSrc: imgSrc,
+          );
+        });
   }
 
   @override
@@ -30,7 +41,7 @@ class UserRequestCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () => shareRequest(request.shareLink),
+                      onTap: () => shareRequest(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,
@@ -120,22 +131,69 @@ class UserRequestCard extends StatelessWidget {
               SizedBox(
                 height: 10.0,
               ),
-              Row(
-                children: [
-                  Tag(text: 'Fulfilled', color: Colors.blue[300]),
-                  SizedBox(
-                    width: 5.0,
-                  ),
-                  Tag(
-                    text: 'Not needed any more',
-                    color: Colors.pink[200],
-                  )
-                ],
-              )
+              updateStatusWidgets()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Row updateStatusWidgets() {
+    if (request.status == 'Active') {
+      return Row(
+        children: [
+          InkWell(
+              onTap: () => onStatusChanged('fulfilled'),
+              child: Tag(text: 'Fulfilled', color: Colors.blue[300])),
+          SizedBox(
+            width: 5.0,
+          ),
+          InkWell(
+            onTap: () => onStatusChanged('not_required_anymore'),
+            child: Tag(
+              text: 'Not Required Anymore',
+              color: Colors.pink[200],
+            ),
+          )
+        ],
+      );
+    } else if (request.status == 'Fulfilled') {
+      return Row(
+        children: [
+          InkWell(
+              onTap: () => onStatusChanged('active'),
+              child: Tag(text: 'Active', color: Colors.blue[300])),
+          SizedBox(
+            width: 5.0,
+          ),
+          InkWell(
+            onTap: () => onStatusChanged('not_required_anymore'),
+            child: Tag(
+              text: 'Not Required Anymore',
+              color: Colors.pink[200],
+            ),
+          )
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          InkWell(
+              onTap: () => onStatusChanged('active'),
+              child: Tag(text: 'Active', color: Colors.blue[300])),
+          SizedBox(
+            width: 5.0,
+          ),
+          InkWell(
+            onTap: () => onStatusChanged('fulfilled'),
+            child: Tag(
+              text: 'Fulfilled',
+              color: Colors.pink[200],
+            ),
+          )
+        ],
+      );
+    }
   }
 }

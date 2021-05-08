@@ -11,7 +11,7 @@ class Request {
   final String contact;
   final String otherContact;
   final String shareLink;
-  final String status;
+  String status;
   final String patientName;
   final String patientAge;
   final String patientSpo2Value;

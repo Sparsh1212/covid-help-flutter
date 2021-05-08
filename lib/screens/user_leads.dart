@@ -41,6 +41,8 @@ class _UserLeadsState extends State<UserLeads> {
                     .map((leadObj) => SingleChildScrollView(
                             child: LeadCard(
                           lead: leadObj,
+                          onUpvote: () => _userLeadsBloc.upVote(leadObj),
+                          onDownvote: () => _userLeadsBloc.downVote(leadObj),
                         )))
                     .toList(),
               );

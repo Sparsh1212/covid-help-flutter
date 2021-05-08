@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/lead_model.dart';
-import 'package:share/share.dart';
+import 'package:rhealth/services/covid_api_service.dart';
+import 'package:rhealth/ui/share_modal.dart';
 
 class LeadCard extends StatelessWidget {
   final Lead lead;
-  LeadCard({@required this.lead});
+  final VoidCallback onUpvote;
+  final VoidCallback onDownvote;
+  LeadCard(
+      {@required this.lead,
+      @required this.onUpvote,
+      @required this.onDownvote});
+  final CovidApiService _covidApiService = CovidApiService();
 
-  void shareLead(String link) {
-    Share.share(link);
+  void shareLead(BuildContext context) async {
+    String imgSrc =
+        await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShareModal(
+            imgSrc: imgSrc,
+          );
+        });
   }
 
   @override
@@ -29,7 +44,7 @@ class LeadCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () => shareLead(lead.shareLink),
+                      onTap: () => shareLead(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,
@@ -118,7 +133,7 @@ class LeadCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                      onTap: () {},
+                      onTap: () => onUpvote(),
                       child: Icon(
                         Icons.thumb_up,
                         color: Colors.green[300],
@@ -134,7 +149,7 @@ class LeadCard extends StatelessWidget {
                     width: 15.0,
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => onDownvote(),
                       child: Icon(
                         Icons.thumb_down,
                         color: Colors.pink[300],

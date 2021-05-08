@@ -5,7 +5,12 @@ import 'package:rhealth/ui/shimmers.dart';
 
 class LeadTabBar extends StatefulWidget {
   final Stream leadsStream;
-  LeadTabBar({@required this.leadsStream});
+  final Function(Lead) onUpvote;
+  final Function(Lead) onDownvote;
+  LeadTabBar(
+      {@required this.leadsStream,
+      @required this.onUpvote,
+      @required this.onDownvote});
   @override
   _LeadTabBarState createState() => _LeadTabBarState();
 }
@@ -30,7 +35,12 @@ class _LeadTabBarState extends State<LeadTabBar>
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.only(bottom: 20.0),
-                  child: LeadCard(lead: snapshot.data[index]));
+                  child: LeadCard(
+                    lead: snapshot.data[index],
+                    onUpvote: () => widget.onUpvote(snapshot.data[index]),
+                    onDownvote: () => widget.onDownvote(snapshot.data[index]),
+                  ),
+                );
               },
             );
           }

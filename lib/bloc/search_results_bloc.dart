@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/models/search_results_model.dart';
+import 'package:rhealth/models/votes_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 
 class SearchResultsBloc {
@@ -42,6 +43,26 @@ class SearchResultsBloc {
 
   void sortLeadsByDate() {
     leadsList.sort((b, a) => a.id.compareTo(b.id));
+    _leadsSink.add(leadsList);
+  }
+
+  void upVote(Lead lead) async {
+    int index = leadsList.indexOf(lead);
+    int id = lead.id;
+    var postObj = {"lead": id, "vote": "upvote"};
+    Votes votes = await _covidApiService.postVotes(postObj);
+    leadsList[index].upvoteCount = votes.upvotes;
+    leadsList[index].downvoteCount = votes.downvotes;
+    _leadsSink.add(leadsList);
+  }
+
+  void downVote(Lead lead) async {
+    int index = leadsList.indexOf(lead);
+    int id = lead.id;
+    var postObj = {"lead": id, "vote": "downvote"};
+    Votes votes = await _covidApiService.postVotes(postObj);
+    leadsList[index].upvoteCount = votes.upvotes;
+    leadsList[index].downvoteCount = votes.downvotes;
     _leadsSink.add(leadsList);
   }
 

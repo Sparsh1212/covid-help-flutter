@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/lead_model.dart';
-import 'package:share/share.dart';
+import 'package:rhealth/services/covid_api_service.dart';
+import 'package:rhealth/ui/share_modal.dart';
 
 class UserPlasmaDonationsCard extends StatelessWidget {
   final Lead lead;
   final VoidCallback onWithdraw;
   UserPlasmaDonationsCard({@required this.lead, @required this.onWithdraw});
+   final CovidApiService _covidApiService = CovidApiService();
 
-  void shareLead(String link) {
-    Share.share(link);
+  void shareLead(BuildContext context) async {
+    String imgSrc =
+        await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShareModal(
+            imgSrc: imgSrc,
+          );
+        });
   }
 
   @override
@@ -30,7 +40,7 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () => shareLead(lead.shareLink),
+                      onTap: () => shareLead(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,

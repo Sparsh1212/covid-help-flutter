@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:rhealth/models/request_model.dart';
+import 'package:rhealth/services/covid_api_service.dart';
+import 'package:rhealth/ui/share_modal.dart';
 import 'package:rhealth/ui/tag_container.dart';
-import 'package:share/share.dart';
 
 class RequestCard extends StatelessWidget {
   final Request request;
   RequestCard({@required this.request});
+  final CovidApiService _covidApiService = CovidApiService();
 
-   void shareRequest(String link) {
-    Share.share(link);
+  void shareRequest(BuildContext context) async {
+    String imgSrc =
+        await _covidApiService.fetchRequestTemplateLink(request.id.toString());
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShareModal(
+            imgSrc: imgSrc,
+          );
+        });
   }
 
   @override
@@ -30,7 +40,7 @@ class RequestCard extends StatelessWidget {
                     style: TextStyle(fontSize: 18.0, color: Colors.blue[900]),
                   )),
                   InkWell(
-                      onTap: () => shareRequest(request.shareLink),
+                      onTap: () => shareRequest(context),
                       child: Row(children: [
                         Icon(
                           Icons.share,
