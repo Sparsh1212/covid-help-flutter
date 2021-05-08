@@ -37,7 +37,7 @@ class _AppState extends State<App> {
               backgroundColor: Colors.white,
               toolbarHeight: 50.0,
               title: Text(
-                'R-health',
+                'R-Care',
                 style:
                     TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               ),

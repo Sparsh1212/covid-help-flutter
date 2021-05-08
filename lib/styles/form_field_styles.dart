@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-Widget themeFormTextField(String fieldName, String fieldHint, BuildContext context, bool isNumeric) {
+Widget themeFormTextField(
+    String fieldName, String fieldHint, BuildContext context, bool isNumeric,
+    {bool isPassword = false}) {
   return Container(
     margin: EdgeInsets.only(bottom: 15.0),
     child: FormBuilderTextField(
+      obscureText: isPassword,
       decoration: InputDecoration(
           filled: true,
           fillColor: Colors.grey[200],
@@ -16,17 +19,23 @@ Widget themeFormTextField(String fieldName, String fieldHint, BuildContext conte
           isCollapsed: true,
           hintText: fieldHint),
       name: fieldName,
-      keyboardType: isNumeric ? TextInputType.number : TextInputType.name ,
+      keyboardType: isNumeric ? TextInputType.number : TextInputType.name,
       validator: FormBuilderValidators.required(context),
     ),
   );
 }
 
-Widget themeSuffixFormTextField(String fieldName, String fieldLabel, String fieldHint, BuildContext context, bool isNumeric) {
+Widget themeSuffixFormTextField(String fieldName, String fieldLabel,
+    String fieldHint, BuildContext context, bool isNumeric) {
   return Row(
     children: [
-      Text(fieldLabel+':', style: TextStyle(fontSize: 15.0),),
-      SizedBox(width: 10.0,),
+      Text(
+        fieldLabel + ':',
+        style: TextStyle(fontSize: 15.0),
+      ),
+      SizedBox(
+        width: 10.0,
+      ),
       Container(
         width: 100.0,
         margin: EdgeInsets.only(bottom: 15.0),
@@ -42,7 +51,7 @@ Widget themeSuffixFormTextField(String fieldName, String fieldLabel, String fiel
               isCollapsed: true,
               suffixText: fieldHint),
           name: fieldName,
-          keyboardType: isNumeric ? TextInputType.number : TextInputType.name ,
+          keyboardType: isNumeric ? TextInputType.number : TextInputType.name,
           validator: FormBuilderValidators.required(context),
         ),
       ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:rhealth/bloc/search_bloc.dart';
 import 'package:rhealth/global/constants.dart';
-import 'package:rhealth/styles/form_field_styles.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -47,7 +46,7 @@ class _SearchState extends State<Search> {
                       isCollapsed: true,
                       hintText: 'Search by Pincode'),
                   name: 'search_query',
-                  keyboardType:TextInputType.name,
+                  keyboardType:TextInputType.number,
                   validator: FormBuilderValidators.required(context),
                 ))),
             SizedBox(

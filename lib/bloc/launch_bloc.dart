@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/token_model.dart';
 import 'package:rhealth/screens/app_screen.dart';
 import 'package:rhealth/screens/login_screen.dart';
@@ -21,13 +22,17 @@ class LaunchBloc {
 
   Future decideFlow() async {
     bool loggedIn = await alreadyLoggedIn();
-    if (loggedIn) {
-      await _authService.initAuthSession();
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (BuildContext context) => App()));
-    } else {
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (BuildContext context) => Login()));
+    try {
+      if (loggedIn) {
+        await _authService.initAuthSession();
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => App()));
+      } else {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => Login()));
+      }
+    } catch (e) {
+      showError('Something went wrong', context);
     }
   }
 }

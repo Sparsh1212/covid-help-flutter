@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
                               Container(
                                 width: 250,
                                 child: themeFormTextField(
-                                    'password', 'Password', context, false),
+                                    'password', 'Password', context, false, isPassword: true),
                               ),
                               TextButton(
                                 style: ButtonStyle(
