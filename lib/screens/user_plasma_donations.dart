@@ -15,6 +15,7 @@ class _UserPlasmaDonationsState extends State<UserPlasmaDonations> {
 
   @override
   void initState() {
+    _userPlasmaDonationsBloc.context = context;
     _userPlasmaDonationsBloc.getUserPlasmaDonations();
     super.initState();
   }
@@ -41,6 +42,10 @@ class _UserPlasmaDonationsState extends State<UserPlasmaDonations> {
                     .map((leadObj) => SingleChildScrollView(
                             child: UserPlasmaDonationsCard(
                           lead: leadObj,
+                          onUpvote: () =>
+                              _userPlasmaDonationsBloc.upVote(leadObj),
+                          onDownvote: () =>
+                              _userPlasmaDonationsBloc.downVote(leadObj),
                           onWithdraw: () => _userPlasmaDonationsBloc
                               .withdrawDonation(leadObj),
                         )))

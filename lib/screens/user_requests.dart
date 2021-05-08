@@ -15,6 +15,7 @@ class _UserRequestsState extends State<UserRequests> {
 
   @override
   void initState() {
+    _userRequestsBloc.context = context;
     _userRequestsBloc.getUserRequests();
     super.initState();
   }

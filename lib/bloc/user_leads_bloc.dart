@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/models/votes_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 
 class UserLeadsBloc {
+  BuildContext context;
   List<Lead> userLeads;
   CovidApiService _covidApiService = CovidApiService();
 
@@ -21,20 +24,28 @@ class UserLeadsBloc {
     int index = userLeads.indexOf(lead);
     int id = lead.id;
     var postObj = {"lead": id, "vote": "upvote"};
-    Votes votes = await _covidApiService.postVotes(postObj);
-    userLeads[index].upvoteCount = votes.upvotes;
-    userLeads[index].downvoteCount = votes.downvotes;
-    _userLeadsSink.add(userLeads);
+    try {
+      Votes votes = await _covidApiService.postVotes(postObj);
+      userLeads[index].upvoteCount = votes.upvotes;
+      userLeads[index].downvoteCount = votes.downvotes;
+      _userLeadsSink.add(userLeads);
+    } catch (e) {
+      showError(e.message.toString(), context);
+    }
   }
 
   void downVote(Lead lead) async {
     int index = userLeads.indexOf(lead);
     int id = lead.id;
     var postObj = {"lead": id, "vote": "downvote"};
-    Votes votes = await _covidApiService.postVotes(postObj);
-    userLeads[index].upvoteCount = votes.upvotes;
-    userLeads[index].downvoteCount = votes.downvotes;
-    _userLeadsSink.add(userLeads);
+    try {
+      Votes votes = await _covidApiService.postVotes(postObj);
+      userLeads[index].upvoteCount = votes.upvotes;
+      userLeads[index].downvoteCount = votes.downvotes;
+      _userLeadsSink.add(userLeads);
+    } catch (e) {
+      showError(e.message.toString(), context);
+    }
   }
 
   void dispose() {

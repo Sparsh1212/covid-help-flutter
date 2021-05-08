@@ -1,24 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/ui/share_modal.dart';
 
 class UserPlasmaDonationsCard extends StatelessWidget {
   final Lead lead;
+  final VoidCallback onUpvote;
+  final VoidCallback onDownvote;
   final VoidCallback onWithdraw;
-  UserPlasmaDonationsCard({@required this.lead, @required this.onWithdraw});
-   final CovidApiService _covidApiService = CovidApiService();
+  UserPlasmaDonationsCard(
+      {@required this.lead,
+      @required this.onUpvote,
+      @required this.onDownvote,
+      @required this.onWithdraw});
+  final CovidApiService _covidApiService = CovidApiService();
 
   void shareLead(BuildContext context) async {
-    String imgSrc =
-        await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ShareModal(
-            imgSrc: imgSrc,
-          );
-        });
+    try {
+      String imgSrc =
+          await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ShareModal(
+              imgSrc: imgSrc,
+            );
+          });
+    } catch (e) {
+      showError(e.message.toString(), context);
+    }
   }
 
   @override
@@ -129,7 +140,7 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
-                      onTap: () {},
+                      onTap: () => onUpvote(),
                       child: Icon(
                         Icons.thumb_up,
                         color: Colors.green[300],
@@ -145,7 +156,7 @@ class UserPlasmaDonationsCard extends StatelessWidget {
                     width: 15.0,
                   ),
                   InkWell(
-                      onTap: () {},
+                      onTap: () => onDownvote(),
                       child: Icon(
                         Icons.thumb_down,
                         color: Colors.pink[300],

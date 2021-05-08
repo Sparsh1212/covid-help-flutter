@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/ui/message_modal.dart';
 
@@ -30,16 +31,20 @@ class ShareBloc {
         ],
         "plasmaDonor": []
       };
-      await _covidApiService.postLead(postObj);
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return MessageModal(
-              text:
-                  'Thankyou so much for your help. These are tough times and we hope that the situation improves soon. Stay safe!',
-              imgSrc: 'assets/images/thankss.png',
-            );
-          });
+      try {
+        await _covidApiService.postLead(postObj);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return MessageModal(
+                text:
+                    'Thankyou so much for your help. These are tough times and we hope that the situation improves soon. Stay safe!',
+                imgSrc: 'assets/images/thankss.png',
+              );
+            });
+      } catch (e) {
+        showError(e.message.toString(), context);
+      }
     }
   }
 }

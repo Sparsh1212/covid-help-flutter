@@ -14,10 +14,11 @@ class _UserLeadsState extends State<UserLeads> {
   UserLeadsBloc _userLeadsBloc = UserLeadsBloc();
 
   @override
-    void initState() {
-      _userLeadsBloc.getUserLeads();
-      super.initState();
-    }
+  void initState() {
+    _userLeadsBloc.context = context;
+    _userLeadsBloc.getUserLeads();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

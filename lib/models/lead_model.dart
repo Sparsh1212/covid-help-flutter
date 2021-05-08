@@ -1,3 +1,5 @@
+import 'package:rhealth/services/urls.dart';
+
 class NonPlasmaDescription {
   final String cost;
   final String capacity;
@@ -63,7 +65,7 @@ class Lead {
       this.downvoteCount});
 
   static String getShareLink(String id) {
-    return "https://stage.channeli.in/app/covid_care/lead/" + id + "/";
+    return BASE_URL+"app/covid_care/lead/" + id + "/";
   }
 
   factory Lead.fromJSON(dynamic json) {

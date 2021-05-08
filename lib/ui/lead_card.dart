@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/lead_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/ui/share_modal.dart';
@@ -14,15 +15,19 @@ class LeadCard extends StatelessWidget {
   final CovidApiService _covidApiService = CovidApiService();
 
   void shareLead(BuildContext context) async {
-    String imgSrc =
-        await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return ShareModal(
-            imgSrc: imgSrc,
-          );
-        });
+    try {
+      String imgSrc =
+          await _covidApiService.fetchLeadTemplateLink(lead.id.toString());
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return ShareModal(
+              imgSrc: imgSrc,
+            );
+          });
+    } catch (e) {
+      showError(e.message.toString(), context);
+    }
   }
 
   @override

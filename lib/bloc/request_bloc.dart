@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 import 'package:rhealth/styles/form_field_styles.dart';
 import 'package:rhealth/ui/message_modal.dart';
@@ -96,6 +97,10 @@ class RequestBloc {
   void submit() async {
     if (formKey.currentState.validate()) {
       formKey.currentState.save();
+      if (constructResources().length == 0) {
+        showError('Please select atleast one requirement', context);
+        return;
+      }
       var postObj = {
         "patient_name": formKey.currentState.fields['patient_name'].value,
         "age": int.parse(formKey.currentState.fields['age'].value),
@@ -109,16 +114,20 @@ class RequestBloc {
             int.parse(formKey.currentState.fields['patient_ct_value'].value),
         "resource": constructResources()
       };
-      await _covidApiService.postRequest(postObj);
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return MessageModal(
-              text:
-                  'Don’t worry, as your request has been shared with our network. These are tough times and we pray that everything gets well soon. Take care!',
-              imgSrc: 'assets/images/hope.png',
-            );
-          });
+      try {
+        await _covidApiService.postRequest(postObj);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return MessageModal(
+                text:
+                    'Don’t worry, as your request has been shared with our network. These are tough times and we pray that everything gets well soon. Take care!',
+                imgSrc: 'assets/images/hope.png',
+              );
+            });
+      } catch (e) {
+        showError(e.message.toString(), context);
+      }
     }
   }
 

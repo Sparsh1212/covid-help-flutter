@@ -1,3 +1,5 @@
+import 'package:rhealth/services/urls.dart';
+
 class Resource {
   final String resourceType;
   final String resourceValue;
@@ -33,7 +35,7 @@ class Request {
       this.resourcesRequired});
 
   static String getShareLink(String id) {
-    return "https://stage.channeli.in/app/covid_care/request/" + id + "/";
+    return BASE_URL+"app/covid_care/request/" + id + "/";
   }
 
   static List<Resource> constructResourcesRequired(dynamic json) {

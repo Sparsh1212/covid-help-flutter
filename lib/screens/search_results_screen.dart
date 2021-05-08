@@ -22,6 +22,7 @@ class _SearchResultsState extends State<SearchResults>
 
   @override
   void initState() {
+    _searchResultsBloc.context = context;
     _tabController = TabController(length: 2, vsync: this);
     _searchResultsBloc.getSearchResults(
         widget.searchQuery, widget.searchFilter);

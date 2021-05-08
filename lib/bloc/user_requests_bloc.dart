@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:rhealth/global/global_functions.dart';
 import 'package:rhealth/models/request_model.dart';
 import 'package:rhealth/services/covid_api_service.dart';
 
 class UserRequestsBloc {
+  BuildContext context;
   List<Request> userRequests;
   CovidApiService _covidApiService = CovidApiService();
 
@@ -30,10 +33,14 @@ class UserRequestsBloc {
 
   void updateStatus(int index, String status) async {
     var patchObj = {"status": status};
-    await _covidApiService.patchStatus(
-        userRequests[index].id.toString(), patchObj);
-    userRequests[index].status = getStatusFromKey(status);
-    _userRequestsSink.add(userRequests);
+    try {
+      await _covidApiService.patchStatus(
+          userRequests[index].id.toString(), patchObj);
+      userRequests[index].status = getStatusFromKey(status);
+      _userRequestsSink.add(userRequests);
+    } catch (e) {
+      showError(e.message.toString(), context);
+    }
   }
 
   void dispose() {
